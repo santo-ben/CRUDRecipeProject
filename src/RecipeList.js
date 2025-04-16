@@ -1,6 +1,6 @@
 import React from "react";
 
-function RecipeList({ recipes, onDeleteRecipe }) {
+function RecipeList({ recipes, deleteRecipe }) {
   return (
     <div className="recipe-list">
       <table>
@@ -20,16 +20,20 @@ function RecipeList({ recipes, onDeleteRecipe }) {
               <td>{recipe.name}</td>
               <td>{recipe.cuisine}</td>
               <td>
-                <img src={recipe.photo} alt={recipe.name} />
+                <img
+                  src={recipe.photo}
+                  alt={recipe.name}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
               </td>
-              <td>{recipe.ingredients}</td>
-              <td>{recipe.preparation}</td>
+              <td className="content_td">
+                <p>{recipe.ingredients}</p>
+              </td>
+              <td className="content_td">
+                <p>{recipe.preparation}</p>
+              </td>
               <td>
-                <button
-                  className="delete"
-                  name="delete"
-                  onClick={() => onDeleteRecipe(index)}
-                >
+                <button name="delete" onClick={() => deleteRecipe(index)}>
                   Delete
                 </button>
               </td>
@@ -42,3 +46,4 @@ function RecipeList({ recipes, onDeleteRecipe }) {
 }
 
 export default RecipeList;
+

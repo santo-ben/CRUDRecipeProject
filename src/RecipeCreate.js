@@ -1,79 +1,45 @@
 import React, { useState } from "react";
 
-function RecipeCreate({ onAddRecipe }) {
-  const [name, setName] = useState("");
-  const [cuisine, setCuisine] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [preparation, setPreparation] = useState("");
+function RecipeCreate({ addRecipe }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    cuisine: "",
+    photo: "",
+    ingredients: "",
+    preparation: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const newRecipe = {
-      name,
-      cuisine,
-      photo,
-      ingredients,
-      preparation,
-    };
-
-    onAddRecipe(newRecipe); // Pass data to parent
-    setName("");
-    setCuisine("");
-    setPhoto("");
-    setIngredients("");
-    setPreparation("");
+    addRecipe(formData);
+    setFormData({
+      name: "",
+      cuisine: "",
+      photo: "",
+      ingredients: "",
+      preparation: "",
+    });
   };
 
   return (
-    <form name="create" onSubmit={handleSubmit}>
-      <label htmlFor="name">Recipe Name</label>
-      <input
-        type="text"
-        name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-
-      <label htmlFor="cuisine">Cuisine</label>
-      <input
-        type="text"
-        name="cuisine"
-        value={cuisine}
-        onChange={(e) => setCuisine(e.target.value)}
-        required
-      />
-
-      <label htmlFor="photo">Image URL</label>
-      <input
-        type="text"
-        name="photo"
-        value={photo}
-        onChange={(e) => setPhoto(e.target.value)}
-        required
-      />
-
-      <label htmlFor="ingredients">Ingredients</label>
-      <textarea
-        name="ingredients"
-        value={ingredients}
-        onChange={(e) => setIngredients(e.target.value)}
-        required
-      />
-
-      <label htmlFor="preparation">Preparation</label>
-      <textarea
-        name="preparation"
-        value={preparation}
-        onChange={(e) => setPreparation(e.target.value)}
-        required
-      />
-
-      <button type="submit">Create Recipe</button>
-    </form>
+    <tr className="recipe-create">
+      <td><input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required /></td>
+      <td><input type="text" name="cuisine" value={formData.cuisine} onChange={handleChange} placeholder="Cuisine" required /></td>
+      <td><input type="url" name="photo" value={formData.photo} onChange={handleChange} placeholder="Photo URL" required /></td>
+      <td><textarea name="ingredients" value={formData.ingredients} onChange={handleChange} placeholder="Ingredients" required /></td>
+      <td><textarea name="preparation" value={formData.preparation} onChange={handleChange} placeholder="Preparation" required /></td>
+      <td><button type="button" onClick={handleSubmit}>Create</button></td>
+    </tr>
   );
 }
 
 export default RecipeCreate;
+
